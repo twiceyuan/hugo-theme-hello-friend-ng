@@ -22,8 +22,8 @@
 {{ end }}
 
 <!-- CSS -->
-{{ $opts := dict "transpiler" "libsass" "targetPath" "main.css" "outputStyle" "compressed" "enableSourceMap" true }}
-{{ with resources.Get "scss/main.scss" | toCSS $opts | minify | fingerprint }}
+{{ $opts := dict "targetPath" "main.css" "outputStyle" "compressed" "enableSourceMap" true }}
+{{ with resources.Get "scss/main.scss" | css.Sass $opts | minify | fingerprint }}
   <link rel="stylesheet" href="{{ .RelPermalink }}" integrity="{{ .Data.Integrity }}" crossorigin="anonymous">
 {{ end }}
 
@@ -69,7 +69,7 @@
 {{- end }}
 
 <!-- Google Analytics internal template -->
-{{- if .Site.Config.Services.GoogleAnalytics.ID }}
+{{- if site.Config.Services.GoogleAnalytics.ID }}
     {{ template "_internal/google_analytics.html" . }}
 {{- end }}
 
